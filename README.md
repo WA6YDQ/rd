@@ -2,13 +2,17 @@ rd.c is a simple program to remotely control the mpg123 mp3 player.
 
 As of 21 March 2018 it is working but not complete. rd is meant 
 to run on a raspberry pi 0 with some control buttons, but there is
-no reason is can't run on any box that mpg123 runs on.
+no reason it can't run on any box that mpg123 runs on.
 
 Using the program:
-start it: ./rd
+start it: 
+
+./rd
 
 It will create 2 fifo's in /tmp: mpgfifo and mpgout
-Then start mpg123: mpg123 --fifo /tmp/mpgfifo -R abcd >> /tmp/mpgout
+Then start mpg123: 
+
+mpg123 --fifo /tmp/mpgfifo -R abcd >> /tmp/mpgout
 
 rd now waits for input from mpg123. This is from the comments in rd.c:
 
