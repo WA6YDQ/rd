@@ -1,4 +1,4 @@
-rd.c is a simple prtogram to remotely control the mpg123 mp3 player. 
+rd.c is a simple program to remotely control the mpg123 mp3 player. 
 
 As of 21 March 2018 it is working but not complete. rd is meant 
 to run on a raspberry pi 0 with some control buttons, but there is
