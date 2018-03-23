@@ -11,7 +11,7 @@ running. It reads the status of 3 momentary switches and controls playback
 of mpg123 thru it's remote capability. 
 
 rd_control.py can be started from /etc/rc.d at bootup. It will start
-rd and mpg123 running is a paused state. A short press of the S1 switch
+rd and mpg123 running in a paused state. A short press of the S1 switch
 will start playback. A short press of S1 will toggle between play and pause.
 
 A long press of S1 will stop playback and terminate all 3 programs (rd,
@@ -22,7 +22,7 @@ A short press on S3 will start playing the next song in the playlist.
 
 When started, rd looks for a file called playlist.fav in the current directory.
 This is defined in the source (rd.c) and can be changed and recompiled if
-needed.
+needed. More information on creating the playlist is in rd.c
 
 
 
@@ -57,7 +57,7 @@ rd now waits for input from mpg123. This is from the comments in rd.c:
 	Also multiple playlists can be created (xmas, love songs, etc)
 
 
-There should be enough comments to make sense of how things should run.
+There should be enough comments in the source to make sense of how things should run.
 
 - kurt
 
