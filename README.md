@@ -10,13 +10,25 @@ rd_control.py is a python (version 2.7) program that starts rd and mpg123
 running. It reads the status of 3 momentary switches and controls playback
 of mpg123 thru it's remote capability. 
 
+rd_control.py can be started from /etc/rc.d at bootup. It will start
+rd and mpg123 running is a paused state. A short press of the S1 switch
+will start playback. A short press of S1 will toggle between play and pause.
+
+A long press of S1 will stop playback and terminate all 3 programs (rd,
+mpg123 and rd_control.py).
+
+A short press on S2 will rewind the current song to the beginning.
+A short press on S3 will start playing the next song in the playlist.
+
+When started, rd looks for a file called playlist.fav in the current directory.
+This is defined in the source (rd.c) and can be changed and recompiled if
+needed.
+
+
+
 rd.c is a simple program to remotely control the mpg123 mp3 player. 
 
-It will create 2 fifo's in /tmp: mpgfifo and mpgout
-Then start mpg123: 
-
-mpg123 --fifo /tmp/mpgfifo -R abcd >> /tmp/mpgout
-
+It will create 2 fifo's /tmp/mpgfifo and /tmp/mpgout
 rd now waits for input from mpg123. This is from the comments in rd.c:
 
 	Commands this program responds to are:

@@ -40,7 +40,7 @@ GPIO.setup(36, GPIO.IN, pull_up_down=GPIO.PUD_UP) # FORWARD (next song)
 # GPIO.setup(37,GPIO.OUT)
 
 # start rd
-rd_proc =  subprocess.Popen(['./rd','&'], shell=True)
+rd_proc =  subprocess.Popen(['rd','&'], shell=True)
 rd_pid = rd_proc.pid
 # use rd_proc.terminate() to close the process
 print("Starting rd")
