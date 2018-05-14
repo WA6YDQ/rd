@@ -5,6 +5,9 @@
 *	ktheis <theis.kurt@gmail.com>
 *	3/15/2018
 *
+*	changed random playlist routine 5/14/2018
+*	(was allowing dups)
+*
 *	This program controls the mpg123 music player
 *	Start this program 1st (./rd) then start mpg123:
 *	mpg123 --fifo /tmp/mpgfifo -R abcd >> /tmp/mpgout
@@ -37,11 +40,6 @@
 *	The playlist file can be edited by hand to pull un-wanted songs
 *	Also multiple playlists can be created (xmas, love songs, etc)
 *
-*
-*	There's nothing special about compiling this: 
-*	cc -o rd rd.c
-*
-*	It should run on any 'nix machine.
 */
 
 #define MAXSONGS 5000	/* maximum number of songs to read in */
@@ -115,10 +113,11 @@ int songnum = 1;
 int FLAG;
 int song_count;
 int number, i;
+int SFLAG=0;
 char *title, *artist, *album;
 
 	/* open playlist */
-	PLIST = fopen("playlist.fav","r");
+	PLIST = fopen("/home/kurt/mp3/playlist.fav","r");
 	if (PLIST == NULL) {
 		perror("playlist.fav");
 		exit(1);
@@ -140,13 +139,27 @@ char *title, *artist, *album;
 	for (ct=0; ct<song_count+1; ct++)
 		random_song_list[ct]=-1;
 
-	for (ct=0; ct<song_count+1; ct++) {
+	/* create a random, non-repeating list */
+	ct = 0;
+	while (ct < song_count) {
+		SFLAG=0;
 		number = (int)(drand48() * song_count + 1);
-		for (i=0; i<=ct; i++)	// no duplicates
-			if (random_song_list[i] == number) continue;
-		random_song_list[ct] = number;
+		for (i=0; i<ct; i++){	// dup check
+			if (random_song_list[i] == number){
+				printf(".");
+				SFLAG=1;
+			}
+		}
+		if (SFLAG==0){
+			random_song_list[ct] = number;
+			printf("+");
+			ct++;
+		}
+		continue;
 	}
 
+	printf("List complete %d ct\n",ct);
+	
 
 	/* create fifo's */
 	unlink("/tmp/mpgfifo");
@@ -256,7 +269,7 @@ char *title, *artist, *album;
 		/* stopped playing */
 		if ((strncmp(response,"@P 0",4))==0) {
 		    printf("STOPPED \n\n");
-		    sleep(1);
+		    usleep(250000);
 		    playlist[random_song_list[ct]][strcspn(playlist[random_song_list[ct]],"\n\r")]='\0';
                     strcpy(cmd,"LOAD ");
                     strcat(cmd,playlist[random_song_list[ct]]);
